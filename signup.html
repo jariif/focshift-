@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up — Focshift</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cyan: #00e5ff;
+      --blue: #1565c0;
+      --dark: #080b10;
+      --card: #111620;
+      --border: #1e2a3a;
+      --text: #e0e8f0;
+      --muted: #7a8fa6;
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 900px;
+      background: rgba(13, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* PAGE */
+    .page {
+      padding: 120px 24px 80px;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* HEADING */
+    .heading {
+      text-align: center;
+    }
+
+    .heading h1 {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      background: linear-gradient(90deg, var(--cyan), #4fc3f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    /* QUOTE */
+    .quote {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      font-style: normal;
+    }
+
+    .quote span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* FORM */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-wrap input::placeholder {
+      color: var(--muted);
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+    }
+
+    .input-wrap .toggle-pass {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .input-wrap .toggle-pass:hover { color: var(--cyan); }
+
+    /* RULES BOX */
+    .rules-box {
+      border: 1px solid var(--cyan);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(0,229,255,0.03);
+    }
+
+    .rules-box .rules-title {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--cyan);
+    }
+
+    .rules-box ol {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rules-box ol li {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* BUTTON */
+    .btn-cyan {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, var(--cyan), #4fc3f7);
+      color: #080b10;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(0,229,255,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-cyan:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0,229,255,0.45);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Focshift</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="plans.html">Plans</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- HEADING -->
+    <div class="heading">
+      <h1>Create Your Account</h1>
+    </div>
+
+    <!-- QUOTE -->
+    <p class="quote">
+      <span>"The secret of getting ahead is getting started."</span><br/>
+      — Mark Twain
+    </p>
+
+    <!-- FORM -->
+    <div class="form-group">
+      <div class="input-wrap">
+        <input type="text" id="nameInput" placeholder="Name" />
+      </div>
+      <div class="input-wrap">
+        <input type="password" id="passInput" placeholder="Password" />
+        <button class="toggle-pass" onclick="togglePass()" id="toggleBtn">👁️</button>
+      </div>
+    </div>
+
+    <!-- RULES BOX -->
+    <div class="rules-box">
+      <span class="rules-title">Rules</span>
+      <ol>
+        <li>This is mobile + browser only.</li>
+        <li>If anything gets erased like the browser or the phone, the progress will be erased.</li>
+      </ol>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="btn-cyan" onclick="handleSignup()">Sign Up</button>
+
+  </div>
+
+  <script>
+    // Get plan from URL
+    function getPlan() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('plan') || 'free';
+    }
+
+    // Toggle password visibility
+    function togglePass() {
+      const input = document.getElementById('passInput');
+      const btn = document.getElementById('toggleBtn');
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    // Handle signup
+    function handleSignup() {
+      const name = document.getElementById('nameInput').value.trim();
+      const pass = document.getElementById('passInput').value.trim();
+
+      if (!name) {
+        alert('Please enter your name.');
+        return;
+      }
+      if (!pass) {
+        alert('Please enter a password.');
+        return;
+      }
+
+      // Save to localStorage
+      localStorage.setItem('focshift_name', name);
+      localStorage.setItem('focshift_pass', pass);
+      localStorage.setItem('focshift_plan', getPlan());
+
+      // Redirect based on plan
+      const plan = getPlan();
+      if (plan === 'pro') {
+        window.location.href = 'activationpro.html';
+      } else if (plan === 'premium') {
+        window.location.href = 'activationpremium.html';
+      } else {
+        window.location.href = 'activationfree.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

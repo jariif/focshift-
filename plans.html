@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plans — Focshift</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cyan: #00e5ff;
+      --blue: #1565c0;
+      --dark: #080b10;
+      --dark2: #0d1117;
+      --card: #111620;
+      --border: #1e2a3a;
+      --text: #e0e8f0;
+      --muted: #7a8fa6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 900px;
+      background: rgba(13, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* PAGE */
+    .page {
+      padding: 120px 24px 80px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* HEADING */
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .pricing-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pricing-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: #080b10;
+    }
+
+    .pricing-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .pricing-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    .card.popular {
+      border: 1.5px solid var(--cyan);
+      box-shadow: 0 0 30px rgba(0,229,255,0.1);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--cyan), #4fc3f7);
+      color: #080b10;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+      white-space: nowrap;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .plan-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .plan-price {
+      font-family: 'Instrument Serif', serif;
+      font-style: normal;
+      font-size: 3rem;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .plan-price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-style: normal;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .plan-features li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .plan-features li .check {
+      color: var(--cyan);
+      font-size: 0.9rem;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .plan-features li .cross {
+      color: #3a4a5a;
+      font-size: 0.9rem;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .btn-grab {
+      display: block;
+      text-align: center;
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: auto;
+    }
+
+    .btn-grab-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-grab-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .btn-grab-cyan {
+      background: linear-gradient(90deg, var(--cyan), #4fc3f7);
+      color: #080b10;
+      border: none;
+      box-shadow: 0 0 24px rgba(0,229,255,0.3);
+    }
+
+    .btn-grab-cyan:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0,229,255,0.5);
+    }
+
+    /* QUOTE */
+    .quote-section {
+      margin-top: 90px;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .quote-text {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: var(--text);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto 16px;
+    }
+
+    .quote-author {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Focshift</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="plans.html">Plans</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="pricing-header">
+      <div class="pricing-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <h1>Pricing</h1>
+      <p>One-time payment. No subscriptions. No surprises.</p>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+      <!-- FREE -->
+      <div class="card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0</div>
+        <ul class="plan-features">
+          <li><span class="check">✔</span> 7 Day Program</li>
+          <li><span class="check">✔</span> 5 Resets</li>
+          <li><span class="check">✔</span> Basic Motivation</li>
+          <li><span class="check">✔</span> Focus Points</li>
+          <li><span class="cross">✘</span> Habit Tracker</li>
+          <li><span class="cross">✘</span> Progress Tracking</li>
+          <li><span class="cross">✘</span> Motivation Quotes</li>
+        </ul>
+        <a href="signup.html?plan=free" class="btn-grab btn-grab-outline">Grab Free</a>
+      </div>
+
+      <!-- PRO (POPULAR) -->
+      <div class="card popular">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$6</div>
+        <ul class="plan-features">
+          <li><span class="check">✔</span> 7 Day Program</li>
+          <li><span class="check">✔</span> Unlimited Resets</li>
+          <li><span class="check">✔</span> Basic Habit Tracker</li>
+          <li><span class="check">✔</span> Basic Analysis</li>
+          <li><span class="check">✔</span> Motivation Quotes</li>
+          <li><span class="cross">✘</span> Advanced Analysis</li>
+          <li><span class="cross">✘</span> Streaks</li>
+        </ul>
+        <a href="signup.html?plan=pro" class="btn-grab btn-grab-cyan">Grab Pro</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="card">
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">$10</div>
+        <ul class="plan-features">
+          <li><span class="check">✔</span> 7 Day Program</li>
+          <li><span class="check">✔</span> Unlimited Resets</li>
+          <li><span class="check">✔</span> Advanced Habit Tracker</li>
+          <li><span class="check">✔</span> Advanced Analysis</li>
+          <li><span class="check">✔</span> Motivation Quotes</li>
+          <li><span class="check">✔</span> Streaks</li>
+          <li><span class="check">✔</span> Priority Support</li>
+        </ul>
+        <a href="signup.html?plan=premium" class="btn-grab btn-grab-outline">Grab Premium</a>
+      </div>
+
+    </div>
+
+    <!-- QUOTE -->
+    <div class="quote-section">
+      <p class="quote-text">"I hated every minute of training, but I said, don't quit. Suffer now and live the rest of your life as a champion."</p>
+      <p class="quote-author">— Muhammad Ali</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
